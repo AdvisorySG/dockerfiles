@@ -40,8 +40,6 @@ services:
       # storage__s3__bucket: advisorysg-ghost
       # storage__s3__region: ap-southeast-1
     volumes:
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
       - ghost-content:/var/lib/ghost/content/
 
   nginx:
