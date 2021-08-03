@@ -35,7 +35,7 @@ services:
       mail__options__port: 465
       mail__options__secureConnection: "true"
       # storage__active: s3
-      # storage__s3__accessKeyId: AKIATZCBF3CWR3JPXC5G
+      # storage__s3__accessKeyId: AKIATZCBF3CWSTYHPM72
       # # storage__s3__secretAccessKey should be specified in ./ghost.env
       # storage__s3__bucket: advisorysg-ghost
       # storage__s3__region: ap-southeast-1
