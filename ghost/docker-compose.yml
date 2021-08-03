@@ -6,7 +6,9 @@ services:
     env_file:
       - ./mysql.env
     environment:
+      # MYSQL_ROOT_PASSWORD should be specified in ./mysql.env
       MYSQL_USER: ghost
+      # MYSQL_PASSWORD should be specified in ./mysql.env
       MYSQL_DATABASE: ghost_production
     volumes:
       - ./volumes/mysql/:/var/lib/mysql/
@@ -23,10 +25,13 @@ services:
       database__client: mysql
       database__connection__host: mysql
       database__connection__user: ghost
+      # database__connection__password should be specified in ./ghost.env
       database__connection__database: ghost_production
       mail__transport: SMTP
       mail__options__service: MailJet
       mail__options__host: in-v3.mailjet.com
+      mail__options__auth__user: 72678b19703f35a36d1b010a710d30ba
+      # mail__options__auth__pass should be specified in ./ghost.env
       mail__options__port: 465
       mail__options__secureConnection: "true"
     volumes:
@@ -43,6 +48,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      # the nginx instance inherits the current existing letsencrypt setup
+      # on the server
       - /etc/letsencrypt/:/etc/letsencrypt/
       - /var/lib/letsencrypt/:/var/lib/letsencrypt/
       - ./volumes/nginx/html/:/usr/share/nginx/html/
