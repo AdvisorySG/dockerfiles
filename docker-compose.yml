@@ -11,7 +11,7 @@ services:
       # MYSQL_PASSWORD should be specified in ./mysql.env
       MYSQL_DATABASE: ghost_production
     volumes:
-      - ./volumes/mysql/:/var/lib/mysql/
+      - ../volumes/mysql/:/var/lib/mysql/
 
   ghost:
     image: ghost:latest
@@ -34,8 +34,15 @@ services:
       # mail__options__auth__pass should be specified in ./ghost.env
       mail__options__port: 465
       mail__options__secureConnection: "true"
+      # storage__active: s3
+      # storage__s3__accessKeyId: AKIATZCBF3CWR3JPXC5G
+      # # storage__s3__secretAccessKey should be specified in ./ghost.env
+      # storage__s3__bucket: advisorysg-ghost
+      # storage__s3__region: ap-southeast-1
     volumes:
-      - ./volumes/ghost/content/:/var/lib/ghost/content/
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - ../volumes/ghost/content/:/var/lib/ghost/content/
 
   nginx:
     build:
@@ -50,6 +57,5 @@ services:
     volumes:
       # the nginx instance inherits the current existing letsencrypt setup
       # on the server
-      - /etc/letsencrypt/:/etc/letsencrypt/
-      - /var/lib/letsencrypt/:/var/lib/letsencrypt/
-      - ./volumes/nginx/html/:/usr/share/nginx/html/
+      - /etc/letsencrypt/:/etc/letsencrypt/:ro
+      - /var/lib/letsencrypt/:/var/lib/letsencrypt/:ro
