@@ -11,7 +11,7 @@ services:
       # MYSQL_PASSWORD should be specified in ./mysql.env
       MYSQL_DATABASE: ghost_production
     volumes:
-      - ../volumes/mysql/:/var/lib/mysql/
+      - mysql-data:/var/lib/mysql/
 
   ghost:
     image: ghost:latest
@@ -42,7 +42,7 @@ services:
     volumes:
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
-      - ../volumes/ghost/content/:/var/lib/ghost/content/
+      - ghost-content:/var/lib/ghost/content/
 
   nginx:
     build:
@@ -59,3 +59,7 @@ services:
       # on the server
       - /etc/letsencrypt/:/etc/letsencrypt/:ro
       - /var/lib/letsencrypt/:/var/lib/letsencrypt/:ro
+
+volumes:
+  mysql-data:
+  ghost-content:
