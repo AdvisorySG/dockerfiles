@@ -24,7 +24,7 @@ The following commands should be executed while in the root of this repository.
 
 The `nginx` image needs to be built first using:
 ```
-$ docker-compose build --no-cache
+$ docker-compose build
 ```
 
 Afterwards, the `ghost` and `mysql` images can be pulled from Docker Hub:
