@@ -34,11 +34,11 @@ services:
       # mail__options__auth__pass should be specified in ./ghost.env
       mail__options__port: 465
       mail__options__secureConnection: "true"
-      # storage__active: s3
-      # storage__s3__accessKeyId: AKIATZCBF3CWSTYHPM72
-      # # storage__s3__secretAccessKey should be specified in ./ghost.env
-      # storage__s3__bucket: advisorysg-ghost
-      # storage__s3__region: ap-southeast-1
+      storage__active: s3
+      storage__s3__accessKeyId: AKIATZCBF3CWSTYHPM72
+      # storage__s3__secretAccessKey should be specified in ./ghost.env
+      storage__s3__bucket: advisorysg-ghost
+      storage__s3__region: ap-southeast-1
     volumes:
       - ghost-content:/var/lib/ghost/content/
 
