@@ -61,6 +61,18 @@ services:
       - /var/lib/letsencrypt/:/var/lib/letsencrypt/:ro
       - /usr/share/nginx/html/:/usr/share/nginx/html/:ro
 
+  elastic-agent:
+    image: docker.elastic.co/beats/elastic-agent:7.17.0
+    container_name: elastic-agent
+    restart: always
+    user: root # note, synthetic browser monitors require this set to `elastic-agent`
+    env_file:
+      - ./elastic-agent.env
+    environment:
+      # FLEET_ENROLLMENT_TOKEN should be specified in ./elastic-agent.env
+      - FLEET_ENROLL=1
+      - FLEET_URL=https://b64977688a1f4f61a610b68abbf534e9.fleet.ap-southeast-1.aws.found.io:443
+
 volumes:
   mysql-data:
   ghost-content:
