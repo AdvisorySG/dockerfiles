@@ -63,7 +63,6 @@ services:
 
   elastic-agent:
     image: docker.elastic.co/beats/elastic-agent:7.17.0
-    container_name: elastic-agent
     restart: always
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     env_file:
@@ -72,6 +71,14 @@ services:
       # FLEET_ENROLLMENT_TOKEN should be specified in ./elastic-agent.env
       - FLEET_ENROLL=1
       - FLEET_URL=https://b64977688a1f4f61a610b68abbf534e9.fleet.ap-southeast-1.aws.found.io:443
+
+  docsearch-scraper:
+   image: algolia/docsearch-scraper:latest
+   restart: always
+   env_file:
+     - ./algolia.env
+   environment:
+     - CONFIG=${DOCSEARCH_SCRAPER_CONFIG}
 
 volumes:
   mysql-data:

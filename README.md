@@ -34,5 +34,6 @@ $ docker-compose pull
 
 Once the latest images are built/pulled, the containers can be rebuilt from the images using:
 ```
+$ export DOCSEARCH_SCRAPER_CONFIG=$(cat ./docsearch.json | jq -r tostring)
 $ docker-compose up -d
 ```

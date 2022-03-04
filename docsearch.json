@@ -1,0 +1,15 @@
+{
+    "index_name": "docsearch_ghost",
+    "scrape_start_urls": false,
+    "start_urls": ["https://beta.advisory.sg"],
+    "sitemap_urls": ["https://beta.advisory.sg/sitemap.xml"],
+    "selectors": {
+        "lvl0": ".site-content h1",
+        "lvl1": ".site-content h2",
+        "lvl2": ".site-content h3",
+        "lvl3": ".site-content h4",
+        "lvl4": ".site-content h5",
+        "lvl5": ".site-content h6",
+        "text": ".site-content p"
+    }
+}
