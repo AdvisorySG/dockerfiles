@@ -63,7 +63,6 @@ services:
 
   elastic-agent:
     image: docker.elastic.co/beats/elastic-agent:7.17.0
-    container_name: elastic-agent
     restart: always
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     env_file:
