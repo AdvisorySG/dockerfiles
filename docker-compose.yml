@@ -2,7 +2,7 @@ version: "3.9"
 services:
   mysql:
     image: mysql:latest
-    restart: on-failure:3
+    restart: always
     env_file:
       - ./mysql.env
     environment:
@@ -17,7 +17,7 @@ services:
 
   ghost:
     image: ghost:latest
-    restart: on-failure:3
+    restart: always
     depends_on:
       - mysql
     env_file:
@@ -46,7 +46,7 @@ services:
 
   nginx:
     image: nginx:latest
-    restart: on-failure:3
+    restart: always
     depends_on:
       - ghost
     ports:
@@ -72,8 +72,8 @@ services:
       - donotstart
 
   elastic-agent:
-    image: docker.elastic.co/beats/elastic-agent:7.17.0
-    restart: on-failure:3
+    image: docker.elastic.co/beats/elastic-agent:8.1.2
+    restart: always
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     env_file:
       - ./elastic-agent.env
