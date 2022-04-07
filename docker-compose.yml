@@ -81,10 +81,6 @@ services:
       # FLEET_ENROLLMENT_TOKEN should be specified in ./elastic-agent.env
       - FLEET_ENROLL=1
       - FLEET_URL=https://b64977688a1f4f61a610b68abbf534e9.fleet.ap-southeast-1.aws.found.io:443
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - certbot-webroot:/usr/share/nginx/html
 
 volumes:
   mysql-data:
