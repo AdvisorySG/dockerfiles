@@ -1,8 +1,8 @@
-version: '3'
+version: "3.9"
 services:
   mysql:
-    image: mysql:8.0
-    restart: always
+    image: mysql:latest
+    restart: on-failure:3
     env_file:
       - ./mysql.env
     environment:
@@ -17,7 +17,7 @@ services:
 
   ghost:
     image: ghost:latest
-    restart: always
+    restart: on-failure:3
     depends_on:
       - mysql
     env_file:
@@ -45,25 +45,35 @@ services:
       - ghost-content:/var/lib/ghost/content/
 
   nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    restart: always
+    image: nginx:latest
+    restart: on-failure:3
     depends_on:
       - ghost
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      # the nginx instance inherits the current existing letsencrypt setup
-      # on the server
-      - /etc/letsencrypt/:/etc/letsencrypt/:ro
-      - /var/lib/letsencrypt/:/var/lib/letsencrypt/:ro
-      - /usr/share/nginx/html/:/usr/share/nginx/html/:ro
+      - ./nginx-conf:/etc/nginx/conf.d:ro
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - certbot-webroot:/usr/share/nginx/html
+
+  certbot:
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - certbot-webroot:/usr/share/nginx/html
+    # command is only to be executed when creating new certificate
+    command: certonly --non-interactive --webroot --webroot-path=/usr/share/nginx/html --email sysadmin@advisory.sg --agree-tos -d beta.advisory.sg
+    profiles:
+      - donotstart
 
   elastic-agent:
     image: docker.elastic.co/beats/elastic-agent:7.17.0
-    restart: always
+    restart: on-failure:3
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     env_file:
       - ./elastic-agent.env
@@ -71,7 +81,14 @@ services:
       # FLEET_ENROLLMENT_TOKEN should be specified in ./elastic-agent.env
       - FLEET_ENROLL=1
       - FLEET_URL=https://b64977688a1f4f61a610b68abbf534e9.fleet.ap-southeast-1.aws.found.io:443
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - certbot-webroot:/usr/share/nginx/html
 
 volumes:
   mysql-data:
   ghost-content:
+  certbot-etc:
+  certbot-var:
+  certbot-webroot:
