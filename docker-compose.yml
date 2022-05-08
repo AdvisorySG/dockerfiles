@@ -65,53 +65,34 @@ services:
       - certbot-var:/var/lib/letsencrypt
       - certbot-webroot:/usr/share/nginx/html
     # command is only to be executed when creating new certificate
-    command: certonly --non-interactive --webroot --webroot-path=/usr/share/nginx/html --email sysadmin@advisory.sg --agree-tos --expand -d beta.advisory.sg -d plausible.advisory.sg
+    command: certonly --non-interactive --webroot --webroot-path=/usr/share/nginx/html --email sysadmin@advisory.sg --agree-tos --expand -d beta.advisory.sg -d umami.advisory.sg
     profiles:
       - donotstart
 
-  plausible_db:
-    image: postgres:12
+  umami_postgres:
+    image: postgres:12-alpine
     restart: always
-    volumes:
-      - plausible-db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=postgres
-
-  plausible_events_db:
-    image: yandex/clickhouse-server:21.3.2.5
-    restart: always
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: umami
     volumes:
-      - plausible-event-data:/var/lib/clickhouse
-      - ./clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro
-      - ./clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro
-    ulimits:
-      nofile:
-        soft: 262144
-        hard: 262144
+      - ./umami-sql/schema.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
+      - umami-db-data:/var/lib/postgresql/data
 
-  plausible:
-    image: plausible/analytics:latest
+  umami:
+    image: ghcr.io/mikecao/umami:postgresql-latest
     restart: always
-    command: sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh db init-admin && /entrypoint.sh run"
     depends_on:
-      - plausible_db
-      - plausible_events_db
+      - umami_postgres
     ports:
-      - "8000:8000"
+      - "3000:3000"
     env_file:
-      - plausible.env
+      - ./umami.env
     environment:
-      BASE_URL: https://plausible.advisory.sg
-      ADMIN_USER_EMAIL: sysadmin@advisory.sg
-      ADMIN_USER_NAME: sysadmin
-      DISABLE_REGISTRATION: "true"
-      # ADMIN_USER_PWD should be specified in ./plausible.env
-      # SECRET_KEY_BASE should be specified in ./plausible.env
-      # MAILER_EMAIL: hello@plausible.advisory.sg
-      # SMTP_HOST_ADDR: in-v3.mailjet.com
-      # SMTP_HOST_PORT: 465
-      # SMTP_USER_NAME: 72678b19703f35a36d1b010a710d30ba
-      # SMTP_USER_PWD should be specified in ./plausible.env
+      DATABASE_URL: mysql://umami:umami@db:5432/umami
+      DATABASE_TYPE: mysql
+      # HASH_SALT should be specified in umami.env
 
 volumes:
   mysql-data:
@@ -119,5 +100,4 @@ volumes:
   certbot-etc:
   certbot-var:
   certbot-webroot:
-  plausible-db-data:
-  plausible-event-data:
+  umami-db-data:
