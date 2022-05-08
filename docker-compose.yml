@@ -72,6 +72,8 @@ services:
   umami_postgres:
     image: postgres:12-alpine
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: umami
       POSTGRES_USER: umami
