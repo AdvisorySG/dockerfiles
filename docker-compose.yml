@@ -92,7 +92,7 @@ services:
     env_file:
       - ./umami.env
     environment:
-      DATABASE_URL: postgresql://umami:umami@db:5432/umami
+      DATABASE_URL: postgresql://umami:umami@umami_postgres:5432/umami
       DATABASE_TYPE: postgresql
       # HASH_SALT should be specified in umami.env
 
