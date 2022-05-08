@@ -90,8 +90,8 @@ services:
     env_file:
       - ./umami.env
     environment:
-      DATABASE_URL: mysql://umami:umami@db:5432/umami
-      DATABASE_TYPE: mysql
+      DATABASE_URL: postgresql://umami:umami@db:5432/umami
+      DATABASE_TYPE: postgresql
       # HASH_SALT should be specified in umami.env
 
 volumes:
