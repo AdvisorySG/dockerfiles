@@ -83,7 +83,7 @@ services:
       - umami-db-data:/var/lib/postgresql/data
 
   umami:
-    image: ghcr.io/mikecao/umami:postgresql-latest
+    image: ghcr.io/umami-software/umami:postgresql-latest
     restart: always
     depends_on:
       - umami_postgres
