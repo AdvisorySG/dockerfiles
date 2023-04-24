@@ -70,7 +70,7 @@ services:
       - donotstart
 
   umami_postgres:
-    image: postgres:12-alpine
+    image: postgres:15-alpine
     restart: always
     ports:
       - "5432:5432"
