@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:8
     restart: always
     env_file:
       - ./mysql.env
@@ -16,7 +16,7 @@ services:
       - SYS_NICE  # CAP_SYS_NICE
 
   ghost:
-    image: ghost:latest
+    image: ghost:5-alpine
     restart: always
     depends_on:
       - mysql
@@ -45,7 +45,7 @@ services:
       - ghost-content:/var/lib/ghost/content/
 
   nginx:
-    image: nginx:latest
+    image: nginx:1-alpine
     restart: always
     ports:
       - "80:80"
@@ -57,7 +57,7 @@ services:
       - certbot-webroot:/usr/share/nginx/html
 
   certbot:
-    image: certbot/certbot:latest
+    image: certbot/certbot:v2.5.0
     depends_on:
       - nginx
     volumes:
@@ -83,7 +83,7 @@ services:
       - umami-db-data:/var/lib/postgresql/data
 
   umami:
-    image: ghcr.io/umami-software/umami:postgresql-latest
+    image: ghcr.io/umami-software/umami:postgresql-v2.2.0
     restart: always
     depends_on:
       - umami_postgres
