@@ -8,7 +8,7 @@ services:
     environment:
       url: https://beta.advisory.sg
       database__client: mysql
-      database__connection__host: ls-8bfae6587eee23077cbc79d3748bc25ae7e4221c.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
+      database__connection__host: ls-1965ed2806d44aa484935908cbdc5e1b6664dc90.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
       database__connection__user: ghost
       # database__connection__password should be specified in ./ghost.env
       database__connection__database: ghost_production
@@ -63,9 +63,7 @@ services:
       DATABASE_TYPE: MySQL
 
 volumes:
-  mysql-data:
   ghost-content:
   certbot-etc:
   certbot-var:
   certbot-webroot:
-  umami-db-data:
