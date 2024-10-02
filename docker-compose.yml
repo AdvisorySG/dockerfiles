@@ -8,7 +8,7 @@ services:
     environment:
       url: https://beta.advisory.sg
       database__client: mysql
-      database__connection__host: ls-1965ed2806d44aa484935908cbdc5e1b6664dc90.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
+      database__connection__host: ls-37fc92a2ac6d2e89c8e72aa7bcdb6f197c6d1303.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
       database__connection__user: ghost
       # database__connection__password should be specified in ./ghost.env
       database__connection__database: ghost_production
@@ -61,6 +61,17 @@ services:
       - "3000:3000"
     environment:
       DATABASE_TYPE: MySQL
+
+  proxysql:
+    image: proxysql/proxysql
+    restart: always
+    ports:
+      - "3306:6033"
+      #- "16032:6032" # Admin console
+      #- "16033:6033"
+      #- "16070:6070"
+    volumes:
+      - ./proxysql.cnf:/etc/proxysql.cnf:ro
 
 volumes:
   ghost-content:
