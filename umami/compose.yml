@@ -1,0 +1,41 @@
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - URL=advisory.sg
+      - VALIDATION=http
+      - SUBDOMAINS=umami,
+      - ONLY_SUBDOMAINS=true
+    volumes:
+      - ./swag_config:/config
+    ports:
+      - 443:443
+      - 80:80
+
+  umami:
+    image: ghcr.io/umami-software/umami:mysql-latest
+    restart: always
+    env_file:
+      - ./umami.env
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_TYPE: MySQL
+
+  proxysql:
+    image: proxysql/proxysql
+    restart: always
+    ports:
+      - "3306:6033"
+      #- "16032:6032" # Admin console
+      #- "16033:6033"
+      #- "16070:6070"
+    volumes:
+      - ./proxysql.cnf:/etc/proxysql.cnf:ro
+
