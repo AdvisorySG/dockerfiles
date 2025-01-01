@@ -47,7 +47,7 @@ services:
       - certbot-var:/var/lib/letsencrypt
       - certbot-webroot:/usr/share/nginx/html
     # command is only to be executed when creating new certificate
-    command: certonly --non-interactive --webroot --webroot-path=/usr/share/nginx/html --email sysadmin@advisory.sg --agree-tos --expand -d beta.advisory.sg -d old.advisory.sg -d umami.advisory.sg
+    command: certonly --non-interactive --webroot --webroot-path=/usr/share/nginx/html --email sysadmin@advisory.sg --agree-tos --expand -d beta.advisory.sg -d umami.advisory.sg
     profiles:
       - donotstart
 
