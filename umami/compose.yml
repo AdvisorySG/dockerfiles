@@ -19,7 +19,7 @@ services:
       - 80:80
 
   umami:
-    image: ghcr.io/umami-software/umami:mysql-latest
+    image: docker.umami.is/umami-software/umami:mysql-latest
     restart: always
     env_file:
       - ./umami.env
