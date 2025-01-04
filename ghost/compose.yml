@@ -24,7 +24,7 @@ services:
     env_file:
       - ./ghost.env
     environment:
-      url: https://beta.advisory.sg
+      url: https://advisory.sg
       database__client: mysql
       database__connection__host: ls-37fc92a2ac6d2e89c8e72aa7bcdb6f197c6d1303.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
       database__connection__user: ghost
