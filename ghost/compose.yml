@@ -10,8 +10,8 @@ services:
       - TZ=Etc/UTC
       - URL=advisory.sg
       - VALIDATION=http
-      - SUBDOMAINS=beta,
-      - ONLY_SUBDOMAINS=true
+      - SUBDOMAINS=www,beta,
+      - ONLY_SUBDOMAINS=false
     volumes:
       - ./swag_config:/config
     ports:
