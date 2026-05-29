@@ -25,7 +25,7 @@ services:
     environment:
       url: https://advisory.sg
       database__client: mysql
-      database__connection__host: ls-37fc92a2ac6d2e89c8e72aa7bcdb6f197c6d1303.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
+      database__connection__host: ls-3f7069cae41f15c4412152def853e7d39e34e241.ceyeqv4lsxnz.ap-southeast-1.rds.amazonaws.com
       database__connection__user: ghost
       # database__connection__password should be specified in ./ghost.env
       database__connection__database: ghost_production
