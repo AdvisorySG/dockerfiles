@@ -19,7 +19,7 @@ services:
       - 80:80
 
   umami:
-    image: docker.umami.is/umami-software/umami:postgresql-v2
+    image: docker.umami.is/umami-software/umami:3.1
     restart: always
     deploy:
       resources:
