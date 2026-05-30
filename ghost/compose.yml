@@ -20,6 +20,11 @@ services:
   ghost:
     image: ghost:6.42-alpine
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: 2.0
+          memory: 512M
     env_file:
       - ./ghost.env
     environment:
